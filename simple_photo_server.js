@@ -86,6 +86,32 @@ function load_album(album_name, page, page_size, callback) {
     );
 }
 
+function handle_rename_album(req, res) {
+    // 1. Get the album name from the URL
+    var core_url = req.parsed_url.pathname;
+    var parts = core_url.split('/');
+    if (parts.length != 4) {
+        send_failure(res, 404, invalid_resource(core_url));
+        return;
+    }
+    var album_name = parts[2];
+
+    // 2. get the post data for the request.
+    var json_body = '';
+    req.on(
+        'readable',
+        function () {
+            var d = req.read();
+            if (d) {
+                if (typeof d == 'string'){
+                    json_bodys +=d;
+                }
+            }
+        }
+    )
+
+}
+
 function handle_incoming_request(req, res) {
     req.parsed_url = url.parse(req.url, true);
     var core_url = req.parsed_url.pathname;
