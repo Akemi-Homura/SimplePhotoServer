@@ -143,12 +143,14 @@ function handle_rename_album(req, res) {
                             send_failure(res, 500, file_error(err));
                             return;
                         }
-                        send_failure(res, null);
+                        send_success(res, null);
                     }
                 );
             } else { // didn't get a body
                 send_failure(res, 403, bad_json());
+                res.end();
             }
+        }
     );
 
 
